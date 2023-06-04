@@ -1,5 +1,7 @@
 package dev.gostav.medievale.entity.interfaces;
 
-public abstract class Animal extends Mob {
+public interface Animal extends Mob {
+    public boolean isTamed();
 
+    public void setTamed(boolean tamed);
 }

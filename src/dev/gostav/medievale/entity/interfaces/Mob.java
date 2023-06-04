@@ -1,13 +1,7 @@
 package dev.gostav.medievale.entity.interfaces;
 
-public abstract class Mob extends LivingEntity {
-    private Entity target;
+public interface Mob extends LivingEntity {
+    public Entity getTarget();
 
-    public Entity getTarget() {
-        return target;
-    }
-
-    public void setTarget(Entity target) {
-        this.target = target;
-    }
+    public void setTarget(Entity target);
 }

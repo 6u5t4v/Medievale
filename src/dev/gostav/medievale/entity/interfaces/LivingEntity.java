@@ -2,47 +2,21 @@ package dev.gostav.medievale.entity.interfaces;
 
 import dev.gostav.medievale.utils.Direction;
 
-public abstract class LivingEntity extends Damageable {
-    boolean swimming, sleeping, canPickupItems;
-    Direction direction;
+public interface LivingEntity extends Damageable {
 
-    public LivingEntity() {
-        super(20);
-        this.swimming = false;
-        this.sleeping = false;
-        this.canPickupItems = true;
-        this.direction = Direction.NORTH;
-    }
+    void setSwimming(boolean swimming);
 
-    void setSwimming(boolean swimming) {
-        this.swimming = swimming;
-    }
+    boolean isSwimming();
 
-    boolean isSwimming() {
-        return swimming;
-    }
+    void setDirection(Direction direction);
 
-    void setDirection(Direction direction) {
-        this.direction = direction;
-    }
+    Direction getDirection();
 
-    Direction getDirection() {
-        return direction;
-    }
+    boolean isSleeping();
 
-    boolean isSleeping() {
-        return sleeping;
-    }
+    void setSleeping(boolean sleeping);
 
-    void setSleeping(boolean sleeping) {
-        this.sleeping = sleeping;
-    }
+    void setCanPickupItems(boolean pickup);
 
-    void setCanPickupItems(boolean pickup) {
-        this.canPickupItems = pickup;
-    }
-
-    boolean canPickupItems() {
-        return canPickupItems;
-    }
+    boolean canPickupItems();
 }

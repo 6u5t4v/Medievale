@@ -1,61 +1,24 @@
 package dev.gostav.medievale.entity.interfaces;
 
-public abstract class Damageable extends Entity {
-    private int health;
-    private int maxHealth;
+public interface Damageable extends Entity {
 
-    public Damageable(int maxHealth) {
-        super();
-        this.maxHealth = maxHealth;
-        this.health = maxHealth;
-    }
+    public int getHealth();
 
-    public int getHealth() {
-        return health;
-    }
+    public int getMaxHealth();
 
-    public int getMaxHealth() {
-        return maxHealth;
-    }
+    public void setMaxHealth(int maxHealth);
 
-    public void setMaxHealth(int maxHealth) {
-        this.maxHealth = maxHealth;
-    }
+    public void resetMaxHealth();
 
-    public void resetMaxHealth() {
-        setHealth(getMaxHealth());
-    }
+    public void setHealth(int health);
 
-    public void setHealth(int health) {
-        this.health = health;
-    }
+    public void damage(int damage);
 
-    public void damage(int damage) {
-        health -= damage;
+    public void damage(int damage, Entity damager);
 
-        if (isDead()) {
-            kill();
-        }
-    }
+    public void heal(int heal);
 
-    public void damage(int damage, Entity damager) {
+    public void kill();
 
-    }
-
-    public void heal(int heal) {
-        health += heal;
-
-        if (health > maxHealth) {
-            resetMaxHealth();
-        }
-    }
-
-    public void kill() {
-        health = 0;
-        // TODO play death animation
-    }
-
-    public boolean isDead() {
-        return health <= 0;
-    }
+    public boolean isDead();
 }

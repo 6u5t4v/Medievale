@@ -6,71 +6,28 @@ import dev.gostav.medievale.math.Vector;
 import dev.gostav.medievale.utils.Direction;
 
 
-public abstract class Entity {
-    private int id;
-    private String customName;
-    private Location location;
-    private Direction direction;
-    private int height, width;
+public interface Entity {
+    public String getName();
 
-    public Entity(int id, String customName, Location location, int height, int width) {
-        this.id = id;
-        this.customName = customName;
-        this.location = location;
-        this.direction = Direction.NORTH;
-        this.height = height;
-        this.width = width;
-    }
+    int getId();
 
-    public String getCustomName() {
-        return customName;
-    }
+    Location getLocation();
 
-    public void setCustomName(String customName) {
-        this.customName = customName;
-    }
+    Level getLevel();
 
-    int getId() {
-        return id;
-    }
+    double getX();
 
-    Location getLocation() {
-        return location;
-    }
+    double getY();
 
-    Level getLevel() {
-        return location.getLevel();
-    }
+    int getHeight();
 
-    double getX() {
-        return location.getX();
-    }
+    int getWidth();
 
-    double getY() {
-        return location.getY();
-    }
+    Direction getDirection();
 
-    int getHeight() {
-        return height;
-    }
+    void playEffect();
 
-    int getWidth() {
-        return width;
-    }
+    Vector getVelocity();
 
-    Direction getDirection() {
-        return direction;
-    }
-
-    void playEffect() {
-        // TODO implement
-    }
-
-    Vector getVelocity() {
-        return null;
-    }
-
-    void setVelocity(Vector velocity) {
-        // TODO implement
-    }
+    void setVelocity(Vector velocity);
 }
