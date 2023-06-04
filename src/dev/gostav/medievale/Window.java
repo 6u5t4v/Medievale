@@ -8,10 +8,10 @@ public class Window {
     public Window(Canvas canvas) {
         frame = new JFrame("Medievale");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
         frame.add(canvas);
-
+        frame.pack();
         frame.setVisible(true);
     }
 
