@@ -1,4 +1,4 @@
-package dev.gostav.medievale.entity.interfaces;
+package dev.gostav.medievale.api;
 
 public interface Mob extends LivingEntity {
     public Entity getTarget();

@@ -1,6 +1,6 @@
 package dev.gostav.medievale.inventory;
 
-import dev.gostav.medievale.entity.interfaces.InventoryHolder;
+import dev.gostav.medievale.api.InventoryHolder;
 
 import java.util.Arrays;
 import java.util.HashMap;

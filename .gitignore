@@ -27,3 +27,14 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+/res/Heroes/Knight/Death.aseprite
+/res/Heroes/Knight/Idle.aseprite
+/res/Heroes/Knight/Run.aseprite
+
+/res/Heroes/Wizzard/Run/Run.aseprite
+/res/Heroes/Wizzard/Idle/Idle.aseprite
+/res/Heroes/Wizzard/Death/Death.aseprite
+
+/res/Heroes/Rogue/Run/Run.aseprite
+/res/Heroes/Rogue/Idle/Idle.aseprite
+/res/Heroes/Rogue/Death/Death.aseprite

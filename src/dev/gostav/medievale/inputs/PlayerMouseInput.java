@@ -4,17 +4,17 @@ import dev.gostav.medievale.Canvas;
 
 import java.awt.event.*;
 
-public class MouseInput implements MouseListener, MouseMotionListener, MouseWheelListener {
+public class PlayerMouseInput implements MouseListener, MouseMotionListener, MouseWheelListener {
     private final Canvas canvas;
 
-    public MouseInput(Canvas canvas) {
+    public PlayerMouseInput(Canvas canvas) {
         this.canvas = canvas;
     }
 
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        System.out.println("Clicked " + e.getButton() + " button");
     }
 
     @Override
@@ -43,11 +43,11 @@ public class MouseInput implements MouseListener, MouseMotionListener, MouseWhee
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        canvas.move(e.getX(), e.getY());
+        System.out.println("Rotate player");
     }
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-
+        System.out.println("Wheel moved " + e.getWheelRotation() + " times");
     }
 }
