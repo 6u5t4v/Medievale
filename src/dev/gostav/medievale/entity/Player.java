@@ -18,6 +18,7 @@ public class Player extends Entity {
     public Player(float x, float y) {
         super(x, y);
         direction = Direction.SOUTH;
+        setAnimation();
     }
 
     @Override
@@ -81,7 +82,7 @@ public class Player extends Entity {
         animations = new AnimationHandler[AnimationState.values().length];
 
         animations[0] = new AnimationHandler("/Heroes/Knight/Idle-Sheet.png", 32, 32, 20, 0);
-        animations[1] = new AnimationHandler("/Heroes/Knight/Run-Sheet.png", 64, 64, 15, 0);
+        animations[1] = new AnimationHandler("/Heroes/Knight/Run-Sheet.png", 64, 64, 15, 32);
         animations[2] = new AnimationHandler("/Heroes/Knight/Death-Sheet.png", 48, 32, 15, 0);
     }
 }

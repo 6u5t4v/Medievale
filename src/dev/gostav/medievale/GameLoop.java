@@ -6,6 +6,16 @@ import dev.gostav.medievale.utils.Time;
 import java.awt.*;
 
 public class GameLoop implements Runnable {
+    private static GameLoop instance;
+
+    public static GameLoop getInstance() {
+        if (instance == null) {
+            instance = new GameLoop();
+        }
+
+        return instance;
+    }
+
     private final Window window;
     private final Canvas canvas;
 
@@ -14,9 +24,10 @@ public class GameLoop implements Runnable {
     private Player player;
 
     public GameLoop() {
+        instance = this;
         initEntities();
 
-        canvas = new Canvas(player);
+        canvas = new Canvas();
         canvas.setFocusable(true);
         canvas.requestFocus();
         window = new Window(canvas);
@@ -25,7 +36,7 @@ public class GameLoop implements Runnable {
     }
 
     private void initEntities() {
-        player = new Player(100, 100);
+        player = new Player(0, 0);
     }
 
     private void startGameLoop() {
@@ -54,7 +65,7 @@ public class GameLoop implements Runnable {
             // Calculate the elapsed time since the last tick
             long tickElapsedTime = currentTime - lastTickTime;
 
-            if (tickElapsedTime >= Time.TICK_TIME) {
+            if (tickElapsedTime >= Time.FRAMES_PER_TICK) {
                 // Perform game logic here
                 tick();
                 lastTickTime = currentTime;
@@ -63,9 +74,9 @@ public class GameLoop implements Runnable {
             // Calculate the elapsed time since the last frame
             long frameElapsedTime = currentTime - lastFrameTime;
 
-            if (frameElapsedTime >= Time.FRAMES_PER_TICK) {
+            if (frameElapsedTime >= Time.TICK_TIME) {
                 // Render the game here
-                render();
+                canvas.repaint();
                 lastFrameTime = currentTime;
                 framesPerSecond++;
             }
@@ -82,13 +93,9 @@ public class GameLoop implements Runnable {
         }
     }
 
-    public void render() {
+    public void render(Graphics g) {
         // Render graphics
-        Graphics g = canvas.getGraphics();
-
         player.render(g);
-
-        canvas.repaint();
     }
 
     private void tick() {

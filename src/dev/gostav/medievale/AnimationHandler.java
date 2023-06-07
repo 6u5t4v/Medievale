@@ -29,7 +29,7 @@ public class AnimationHandler {
             frames = new BufferedImage[numFrames];
 
             for (int i = 0; i < numFrames; i++) {
-                frames[i] = fullSheet.getSubimage(i * frameWidth, yOffset, frameWidth + yOffset, frameHeight);
+                frames[i] = fullSheet.getSubimage(i * frameWidth, 0, frameWidth, frameHeight);
             }
 
             this.frameWidth = frameWidth;

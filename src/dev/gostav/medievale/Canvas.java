@@ -1,6 +1,5 @@
 package dev.gostav.medievale;
 
-import dev.gostav.medievale.entity.Player;
 import dev.gostav.medievale.handlers.InputHandler;
 import dev.gostav.medievale.inputs.PlayerKeyboardInput;
 import dev.gostav.medievale.inputs.PlayerMouseInput;
@@ -15,14 +14,15 @@ public class Canvas extends JPanel {
     private final InputHandler inputHandler;
     private final EventManager eventManager;
     private final ResourceManager resourceManager;
+    private final GameLoop gameLoop;
 
-    private final Player player;
-
-    public Canvas(Player player) {
-        this.player = player;
+    public Canvas() {
+        this.gameLoop = GameLoop.getInstance();
         this.inputHandler = new InputHandler();
         this.eventManager = new EventManager();
         this.resourceManager = new ResourceManager();
+
+        registerInputListeners();
 
         addKeyListener(inputHandler);
         addMouseListener(inputHandler);
@@ -33,12 +33,13 @@ public class Canvas extends JPanel {
     }
 
     private void registerInputListeners() {
-        inputHandler.addKeyListener(new PlayerKeyboardInput(player));
+        inputHandler.addKeyListener(new PlayerKeyboardInput());
         inputHandler.addMouseListener(new PlayerMouseInput(this));
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        gameLoop.render(g);
     }
 }

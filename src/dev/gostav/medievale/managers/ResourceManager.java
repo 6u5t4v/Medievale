@@ -8,9 +8,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ResourceManager {
+    private static ResourceManager instance;
+
+    public static ResourceManager getInstance() {
+        if (instance == null) {
+            instance = new ResourceManager();
+        }
+        return instance;
+    }
+
     private Map<String, Image> imageCache;
 
     public ResourceManager() {
+        instance = this;
         imageCache = new HashMap<>();
     }
 

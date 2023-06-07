@@ -1,5 +1,6 @@
 package dev.gostav.medievale.inputs;
 
+import dev.gostav.medievale.GameLoop;
 import dev.gostav.medievale.entity.Player;
 import dev.gostav.medievale.utils.Direction;
 
@@ -9,8 +10,8 @@ import java.awt.event.KeyEvent;
 public class PlayerKeyboardInput extends KeyAdapter {
     private final Player player;
 
-    public PlayerKeyboardInput(Player player) {
-        this.player = player;
+    public PlayerKeyboardInput() {
+        this.player = GameLoop.getInstance().getPlayer();
     }
 
     @Override
