@@ -1,7 +1,6 @@
 package dev.gostav.medievale;
 
 import dev.gostav.medievale.entity.Player;
-import dev.gostav.medievale.utils.Time;
 
 import java.awt.*;
 
@@ -40,57 +39,49 @@ public class GameLoop implements Runnable {
     }
 
     private void startGameLoop() {
-//        Timer timer = new Timer();
-//        timer.scheduleAtFixedRate(new TimerTask() {
-//            public void run() {
-//                tick();
-//                render();
-//            }
-//        }, 0, 20);
-
         thread = new Thread(this);
         thread.start();
     }
 
     @Override
     public void run() {
-        long lastTickTime = Time.now();
-        long lastFrameTime = Time.now();
-        int framesPerSecond = 0;
-        long startTime = Time.now();
+        double timePerFrame = 1000000000 / 120;
+        double timePerTick = 1000000000 / 120;
+
+        long previousTime = System.nanoTime();
+
+        int frames = 0;
+        int ticks = 0;
+        long lastCheck = System.currentTimeMillis();
+
+        double deltaTick = 0, deltaFrame = 0;
 
         while (true) {
-            long currentTime = Time.now();
+            long currentTime = System.nanoTime();
+            deltaTick += (currentTime - previousTime) / timePerTick;
+            deltaFrame += (currentTime - previousTime) / timePerFrame;
+            previousTime = currentTime;
 
-            // Calculate the elapsed time since the last tick
-            long tickElapsedTime = currentTime - lastTickTime;
-
-            if (tickElapsedTime >= Time.FRAMES_PER_TICK) {
-                // Perform game logic here
+            if (deltaTick >= 1) {
                 tick();
-                lastTickTime = currentTime;
+                ticks++;
+                deltaTick--;
             }
 
-            // Calculate the elapsed time since the last frame
-            long frameElapsedTime = currentTime - lastFrameTime;
-
-            if (frameElapsedTime >= Time.TICK_TIME) {
-                // Render the game here
+            if (deltaFrame >= 1) {
                 canvas.repaint();
-                lastFrameTime = currentTime;
-                framesPerSecond++;
+                frames++;
+                deltaFrame--;
             }
 
-            // Calculate the elapsed time since the start
-            long elapsedTime = currentTime - startTime;
-
-            // Display FPS every second
-            if (elapsedTime >= Time.FRAME_TIME) {
-                System.out.println("FPS: " + framesPerSecond);
-                framesPerSecond = 0;
-                startTime = currentTime;
+            if (System.currentTimeMillis() - lastCheck >= 1000) {
+                System.out.println("FPS: " + frames + " TPS: " + ticks);
+                frames = 0;
+                ticks = 0;
+                lastCheck = System.currentTimeMillis();
             }
         }
+
     }
 
     public void render(Graphics g) {
@@ -105,5 +96,9 @@ public class GameLoop implements Runnable {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public void windowFocusLost() {
+        player.setVelocity(0, 0);
     }
 }

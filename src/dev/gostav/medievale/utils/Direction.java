@@ -1,5 +1,7 @@
 package dev.gostav.medievale.utils;
 
+import dev.gostav.medievale.math.Vector;
+
 public enum Direction {
     NORTH(0, -1),
     EAST(1, 0),
@@ -17,6 +19,10 @@ public enum Direction {
     private Direction(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public static Direction getDirection(Vector velocity) {
+        return Direction.get(velocity.getX(), velocity.getY());
     }
 
     public int getX() {

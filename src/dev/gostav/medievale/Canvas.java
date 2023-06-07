@@ -1,7 +1,7 @@
 package dev.gostav.medievale;
 
 import dev.gostav.medievale.handlers.InputHandler;
-import dev.gostav.medievale.inputs.PlayerKeyboardInput;
+import dev.gostav.medievale.inputs.Keyboard;
 import dev.gostav.medievale.inputs.PlayerMouseInput;
 import dev.gostav.medievale.managers.EventManager;
 import dev.gostav.medievale.managers.ResourceManager;
@@ -33,7 +33,7 @@ public class Canvas extends JPanel {
     }
 
     private void registerInputListeners() {
-        inputHandler.addKeyListener(new PlayerKeyboardInput());
+        inputHandler.addKeyListener(Keyboard.getListener());
         inputHandler.addMouseListener(new PlayerMouseInput(this));
     }
 
