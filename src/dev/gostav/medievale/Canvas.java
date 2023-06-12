@@ -18,6 +18,7 @@ public class Canvas extends JPanel {
 
     public Canvas() {
         this.gameLoop = GameLoop.getInstance();
+
         this.inputHandler = new InputHandler();
         this.eventManager = new EventManager();
         this.resourceManager = new ResourceManager();

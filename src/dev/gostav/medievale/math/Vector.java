@@ -65,6 +65,10 @@ public class Vector {
         throw new ArithmeticException("Cannot normalize zero vector.");
     }
 
+    public Vector normalized() {
+        return new Vector(x, y).normalize();
+    }
+
     public double distance(Vector other) {
         double dx = this.x - other.x;
         double dy = this.y - other.y;
@@ -89,10 +93,15 @@ public class Vector {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Vector) {
-            Vector other = (Vector) obj;
+        if (obj instanceof Vector other) {
             return this.x == other.x && this.y == other.y;
         }
+
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "x=" + x + ", y=" + y;
     }
 }

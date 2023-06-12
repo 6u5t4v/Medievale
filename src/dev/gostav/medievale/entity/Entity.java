@@ -1,21 +1,27 @@
 package dev.gostav.medievale.entity;
 
+import dev.gostav.medievale.utils.Collider;
+
 import java.awt.*;
 
 public abstract class Entity {
     protected float x, y;
+    protected int width, height;
+    protected Collider collider;
 
-    public Entity(float x, float y) {
+    protected Entity(float x, float y, int width, int height) {
         this.x = x;
         this.y = y;
+        this.width = width;
+        this.height = height;
         loadAnimations();
     }
 
-    public abstract void update();
+    protected abstract void tick();
 
-    public abstract void render(Graphics g);
+    protected abstract void render(Graphics g);
 
-    abstract void loadAnimations();
+    protected abstract void loadAnimations();
 
     public float getX() {
         return x;
@@ -23,5 +29,9 @@ public abstract class Entity {
 
     public float getY() {
         return y;
+    }
+
+    public void setCollider(Collider collider) {
+        this.collider = collider;
     }
 }

@@ -1,6 +1,8 @@
 package dev.gostav.medievale;
 
 import dev.gostav.medievale.entity.Player;
+import dev.gostav.medievale.levels.LevelManager;
+import dev.gostav.medievale.utils.Time;
 
 import java.awt.*;
 
@@ -15,12 +17,14 @@ public class GameLoop implements Runnable {
         return instance;
     }
 
-    private final Window window;
     private final Canvas canvas;
 
     private Thread thread;
 
     private Player player;
+    private LevelManager levelManager;
+
+    public final static int SCALE = 3;
 
     public GameLoop() {
         instance = this;
@@ -29,13 +33,14 @@ public class GameLoop implements Runnable {
         canvas = new Canvas();
         canvas.setFocusable(true);
         canvas.requestFocus();
-        window = new Window(canvas);
+        new Window(canvas);
 
         startGameLoop();
     }
 
     private void initEntities() {
-        player = new Player(0, 0);
+        player = new Player(0, 0, 64, 64);
+        levelManager = new LevelManager();
     }
 
     private void startGameLoop() {
@@ -45,8 +50,8 @@ public class GameLoop implements Runnable {
 
     @Override
     public void run() {
-        double timePerFrame = 1000000000 / 120;
-        double timePerTick = 1000000000 / 120;
+        double timePerFrame = Time.FRAMES_PER_TICK;
+        double timePerTick = Time.FRAMES_PER_TICK;
 
         long previousTime = System.nanoTime();
 
@@ -57,7 +62,7 @@ public class GameLoop implements Runnable {
         double deltaTick = 0, deltaFrame = 0;
 
         while (true) {
-            long currentTime = System.nanoTime();
+            long currentTime = Time.now();
             deltaTick += (currentTime - previousTime) / timePerTick;
             deltaFrame += (currentTime - previousTime) / timePerFrame;
             previousTime = currentTime;
@@ -86,12 +91,14 @@ public class GameLoop implements Runnable {
 
     public void render(Graphics g) {
         // Render graphics
+        levelManager.render(g);
         player.render(g);
     }
 
     private void tick() {
         // Game logic
-        player.update();
+        levelManager.tick();
+        player.tick();
     }
 
     public Player getPlayer() {

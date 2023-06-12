@@ -1,88 +1,116 @@
 package dev.gostav.medievale.entity;
 
-import dev.gostav.medievale.AnimationHandler;
+import dev.gostav.medievale.handlers.AnimationHandler;
 import dev.gostav.medievale.handlers.ControlHandler;
 import dev.gostav.medievale.math.Vector;
-import dev.gostav.medievale.utils.AnimationState;
+import dev.gostav.medievale.utils.Collider;
 import dev.gostav.medievale.utils.Direction;
 
 import java.awt.*;
 
 public class Player extends Entity {
+    enum State {
+        IDLE,
+        RUN,
+        DEATH
+    }
+
     private AnimationHandler[] animations;
     private AnimationHandler currentAnimation;
 
-    private AnimationState animState;
+    private State state;
 
-    private Vector velocity;
+    protected Vector direction, velocity;
+    protected float movementSpeed = 4;
+    private Direction facing;
 
-    private float movementSpeed = 4;
+    public Player(float x, float y, int width, int height) {
+        super(x, y, width, height);
 
-    public Player(float x, float y) {
-        super(x, y);
-        this.velocity = new Vector(0, 0);
+        this.velocity = Vector.Zero();
+        this.direction = Vector.Zero();
+
+        facing = Direction.EAST;
+
+        setCollider(new Collider((int) x, (int) y, width, height));
         setAnimation();
     }
 
     @Override
-    public void update() {
+    public void tick() {
+        processInput();
+        updatePos();
+
         setAnimation();
 
         currentAnimation.update();
+        collider.update((int) x, (int) y);
+    }
 
-        processInput();
-        updatePos();
+
+    @Override
+    public void render(Graphics g) {
+        currentAnimation.render(g, (int) x, (int) y, facing == Direction.WEST);
+        collider.render(g);
     }
 
     private void processInput() {
         if (ControlHandler.UP.down()) {
-            velocity.setY(-movementSpeed);
+            direction.setY(-1);
         } else if (ControlHandler.DOWN.down()) {
-            velocity.setY(movementSpeed);
+            direction.setY(1);
         } else {
-            velocity.setY(0);
+            direction.setY(0);
         }
 
         if (ControlHandler.LEFT.down()) {
-            velocity.setX(-movementSpeed);
+            direction.setX(-1);
         } else if (ControlHandler.RIGHT.down()) {
-            velocity.setX(movementSpeed);
-        } else {
-            velocity.setX(0);
-        }
-    }
+            direction.setX(1);
+        } else
+            direction.setX(0);
 
-    @Override
-    public void render(Graphics g) {
-        currentAnimation.render(g, (int) x, (int) y);
     }
 
     private void updatePos() {
+        double magnitude = direction.magnitude();
+
+        if (magnitude == 0) {
+            velocity.setX(0);
+            velocity.setY(0);
+            return;
+        }
+
+        if (direction.getX() > 0) {
+            facing = Direction.EAST;
+        } else if (direction.getX() < 0) {
+            facing = Direction.WEST;
+        }
+
+        velocity = direction.normalized().multiply(movementSpeed);
+
         x += velocity.getX();
         y += velocity.getY();
     }
 
     private void setAnimation() {
         if (velocity.equals(Vector.Zero())) {
-            animState = AnimationState.IDLE;
+            state = State.IDLE;
         } else {
-            animState = AnimationState.RUN;
+            state = State.RUN;
         }
 
-        currentAnimation = animations[animState.getIndex()];
-    }
-
-    public AnimationState getAnimState() {
-        return animState;
+        currentAnimation = animations[state.ordinal()];
     }
 
     @Override
-    void loadAnimations() {
-        animations = new AnimationHandler[AnimationState.values().length];
+    public void loadAnimations() {
+        animations = new AnimationHandler[State.values().length];
 
-        animations[0] = new AnimationHandler("/Heroes/Knight/Idle-Sheet.png", 32, 32, 20, 0);
-        animations[1] = new AnimationHandler("/Heroes/Knight/Run-Sheet.png", 64, 64, 15, 32);
-        animations[2] = new AnimationHandler("/Heroes/Knight/Death-Sheet.png", 48, 32, 15, 0);
+        animations[0] = new AnimationHandler("/Player/Idle-Sheet.png", 32, 32, 20, 0);
+        animations[1] = new AnimationHandler("/Player/Run-Sheet.png", 64, 32, 15, 32);
+
+        animations[2] = new AnimationHandler("/Player/Death-Sheet.png", 48, 32, 15, 0);
     }
 
     public Vector getVelocity() {
