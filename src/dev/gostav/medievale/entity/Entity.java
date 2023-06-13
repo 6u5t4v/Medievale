@@ -1,17 +1,20 @@
 package dev.gostav.medievale.entity;
 
+import dev.gostav.medievale.location.Location;
 import dev.gostav.medievale.utils.Collider;
+import dev.gostav.medievale.utils.Direction;
 
 import java.awt.*;
 
 public abstract class Entity {
-    protected float x, y;
+    protected Location location;
+
     protected int width, height;
     protected Collider collider;
 
-    protected Entity(float x, float y, int width, int height) {
-        this.x = x;
-        this.y = y;
+    protected Entity(double x, double y, int width, int height) {
+        this.location = new Location((int) x, (int) y, null, Direction.WEST);
+
         this.width = width;
         this.height = height;
         loadAnimations();
@@ -23,12 +26,20 @@ public abstract class Entity {
 
     protected abstract void loadAnimations();
 
-    public float getX() {
-        return x;
+    public double getX() {
+        return location.getX();
     }
 
-    public float getY() {
-        return y;
+    public double getY() {
+        return location.getY();
+    }
+
+    public Location location() {
+        return location;
+    }
+
+    public Direction getFacing() {
+        return location.getDirection();
     }
 
     public void setCollider(Collider collider) {

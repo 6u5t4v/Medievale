@@ -1,7 +1,8 @@
 package dev.gostav.medievale;
 
 import dev.gostav.medievale.entity.Player;
-import dev.gostav.medievale.levels.LevelManager;
+import dev.gostav.medievale.level.Level;
+import dev.gostav.medievale.level.LevelManager;
 import dev.gostav.medievale.utils.Time;
 
 import java.awt.*;
@@ -24,8 +25,6 @@ public class GameLoop implements Runnable {
     private Player player;
     private LevelManager levelManager;
 
-    public final static int SCALE = 3;
-
     public GameLoop() {
         instance = this;
         initEntities();
@@ -39,8 +38,12 @@ public class GameLoop implements Runnable {
     }
 
     private void initEntities() {
-        player = new Player(0, 0, 64, 64);
         levelManager = new LevelManager();
+
+        Level level = levelManager.getCurrentLevel();
+        System.out.println(level.getWidth() + " " + level.getHeight());
+        player = new Player(level, 64, 64);
+        player.updateCamera();
     }
 
     private void startGameLoop() {

@@ -1,7 +1,9 @@
 package dev.gostav.medievale.entity;
 
+import dev.gostav.medievale.gfx.Renderer;
 import dev.gostav.medievale.handlers.AnimationHandler;
 import dev.gostav.medievale.handlers.ControlHandler;
+import dev.gostav.medievale.level.Level;
 import dev.gostav.medievale.math.Vector;
 import dev.gostav.medievale.utils.Collider;
 import dev.gostav.medievale.utils.Direction;
@@ -13,26 +15,28 @@ public class Player extends Entity {
         IDLE,
         RUN,
         DEATH
+
     }
+
+    private State state;
 
     private AnimationHandler[] animations;
     private AnimationHandler currentAnimation;
 
-    private State state;
-
     protected Vector direction, velocity;
     protected float movementSpeed = 4;
-    private Direction facing;
 
-    public Player(float x, float y, int width, int height) {
-        super(x, y, width, height);
+
+    public Player(Level level, int width, int height) {
+        super(0, 0, width, height);
+
+        location.setX(Level.ToPixel(level.getWidth() / 2));
+        location.setY(Level.ToPixel((level.getHeight() / 2) + 1));
 
         this.velocity = Vector.Zero();
         this.direction = Vector.Zero();
 
-        facing = Direction.EAST;
-
-        setCollider(new Collider((int) x, (int) y, width, height));
+        setCollider(new Collider((int) getX(), (int) getY(), width, height));
         setAnimation();
     }
 
@@ -44,14 +48,19 @@ public class Player extends Entity {
         setAnimation();
 
         currentAnimation.update();
-        collider.update((int) x, (int) y);
-    }
+        collider.update((int) getX(), (int) getY());
 
+        updateCamera();
+    }
 
     @Override
     public void render(Graphics g) {
-        currentAnimation.render(g, (int) x, (int) y, facing == Direction.WEST);
+        currentAnimation.render(g, (int) getX(), (int) getY(), getFacing() == Direction.WEST);
         collider.render(g);
+    }
+
+    public void updateCamera() {
+        Renderer.Camera.center((int) (getX() + (width / 2)), (int) (getY() + (height / 2)), 0, 0, location.getLevel().getWidth(), location.getLevel().getHeight());
     }
 
     private void processInput() {
@@ -82,15 +91,14 @@ public class Player extends Entity {
         }
 
         if (direction.getX() > 0) {
-            facing = Direction.EAST;
+            location.setDirection(Direction.EAST);
         } else if (direction.getX() < 0) {
-            facing = Direction.WEST;
+            location.setDirection(Direction.WEST);
         }
 
         velocity = direction.normalized().multiply(movementSpeed);
 
-        x += velocity.getX();
-        y += velocity.getY();
+        location.translate(velocity.getX(), velocity.getY());
     }
 
     private void setAnimation() {

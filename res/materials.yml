@@ -1,0 +1,41 @@
+# This file contains all the materials in the game.
+# The format is as follows:
+#   NAME:
+#     ID: ID
+#     NAME: NAME (in-game)
+#     HARDNESS: HARDNESS (-1 for unbreakable) (1 for hand) (2 for stone) (3 for iron) (4 for diamond)
+#     SOLID: SOLID (true or false)
+#     LIGHT_LEVEL: LIGHT_LEVEL (0 - 15)
+#     TOOL: TOOL (NONE, PICKAXE, AXE, SHOVEL, or SHEARS)
+#     TOOL_LEVEL: TOOL_LEVEL (0 for none) (1 for wood) (2 for stone) (3 for iron) (4 for diamond)
+#     DROPS: DROPS (list of items to drop when broken)
+#       ITEMS: ITEMS (list of items to drop)
+#         ID: ID (item id)
+#           MIN_AMOUNT: AMOUNT (amount of item to drop)
+#           MAX_AMOUNT: AMOUNT (amount of item to drop)
+#           CHANCE: CHANCE (chance of item dropping) (0 - 100)
+#         ...
+#       XP:
+#         AMOUNT: AMOUNT (amount of xp to drop)
+#         CHANCE: CHANCE (chance of xp dropping) (0 - 100)
+
+GRASS:
+  ID: 1
+  NAME: Grass
+  HARDNESS: 1 # DEFAULT 1
+  SOLID: true # DEFAULT true
+  LIGHT_LEVEL: 0 # DEFAULT 0
+  TOOL: SHOVEL # DEFAULT NONE
+  TOOL_LEVEL: 0 # DEFAULT 0
+  DROPS: # DEFAULT NONE
+    ITEMS:
+      DIRT:
+        MIN_AMOUNT: 1
+        MAX_AMOUNT: 1
+        CHANCE: 100
+    XP:
+      AMOUNT: 0
+
+
+
+

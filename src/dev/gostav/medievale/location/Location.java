@@ -1,24 +1,38 @@
 package dev.gostav.medievale.location;
 
+import dev.gostav.medievale.level.Level;
 import dev.gostav.medievale.utils.Direction;
 
 public class Location {
-    private int x, y;
+    private double x, y;
     private Level level;
     private Direction direction;
 
-    public Location(int x, int y, Level level, Direction direction) {
+    public Location(double x, double y, Level level, Direction direction) {
         this.x = x;
         this.y = y;
         this.level = level;
         this.direction = direction;
     }
 
-    public int getX() {
+    public void translate(double x, double y) {
+        this.x += x;
+        this.y += y;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 

@@ -4,7 +4,6 @@ import dev.gostav.medievale.handlers.InputHandler;
 import dev.gostav.medievale.inputs.Keyboard;
 import dev.gostav.medievale.inputs.PlayerMouseInput;
 import dev.gostav.medievale.managers.EventManager;
-import dev.gostav.medievale.managers.ResourceManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +12,6 @@ import java.awt.*;
 public class Canvas extends JPanel {
     private final InputHandler inputHandler;
     private final EventManager eventManager;
-    private final ResourceManager resourceManager;
     private final GameLoop gameLoop;
 
     public Canvas() {
@@ -21,7 +19,6 @@ public class Canvas extends JPanel {
 
         this.inputHandler = new InputHandler();
         this.eventManager = new EventManager();
-        this.resourceManager = new ResourceManager();
 
         registerInputListeners();
 
@@ -31,6 +28,10 @@ public class Canvas extends JPanel {
         addMouseWheelListener(inputHandler);
 
         setPreferredSize(new Dimension(800, 600));
+    }
+
+    public static void loop(Runnable init, Runnable update, Runnable render) {
+        init.run();
     }
 
     private void registerInputListeners() {

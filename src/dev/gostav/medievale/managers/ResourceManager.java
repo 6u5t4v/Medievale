@@ -1,7 +1,7 @@
 package dev.gostav.medievale.managers;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -17,24 +17,24 @@ public class ResourceManager {
         return instance;
     }
 
-    private Map<String, Image> imageCache;
+    private Map<String, BufferedImage> imageCache;
 
     public ResourceManager() {
         instance = this;
         imageCache = new HashMap<>();
     }
 
-    public Image loadImage(String path) {
+    public BufferedImage loadImage(String path) {
         if (imageCache.containsKey(path)) {
             return imageCache.get(path);
         } else {
-            Image image = loadImageFromFile(path);
+            BufferedImage image = loadImageFromFile(path);
             imageCache.put(path, image);
             return image;
         }
     }
 
-    private Image loadImageFromFile(String path) {
+    private BufferedImage loadImageFromFile(String path) {
         // Load the image from file using ImageIO or any other image loading library
         try {
             InputStream is = getClass().getResourceAsStream(path);

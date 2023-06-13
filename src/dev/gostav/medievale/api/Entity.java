@@ -1,6 +1,6 @@
 package dev.gostav.medievale.api;
 
-import dev.gostav.medievale.location.Level;
+import dev.gostav.medievale.level.Level;
 import dev.gostav.medievale.location.Location;
 import dev.gostav.medievale.math.Vector;
 import dev.gostav.medievale.utils.Direction;

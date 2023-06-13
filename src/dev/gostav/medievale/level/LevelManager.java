@@ -1,4 +1,4 @@
-package dev.gostav.medievale.levels;
+package dev.gostav.medievale.level;
 
 import java.awt.*;
 
@@ -8,7 +8,7 @@ public class LevelManager {
     private Level currentLevel;
 
     public LevelManager() {
-        overworld = new Level();
+        overworld = new Level(100, 100, 0);
         currentLevel = overworld;
     }
 
@@ -20,7 +20,7 @@ public class LevelManager {
         currentLevel.render(g);
     }
 
-    public Level getOverworld() {
-        return overworld;
+    public Level getCurrentLevel() {
+        return currentLevel;
     }
 }
