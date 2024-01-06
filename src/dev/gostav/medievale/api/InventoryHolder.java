@@ -1,9 +1,0 @@
-package dev.gostav.medievale.api;
-
-import dev.gostav.medievale.inventory.Inventory;
-
-public interface InventoryHolder {
-    Inventory getInventory();
-
-    void setInventory(Inventory inventory);
-}
