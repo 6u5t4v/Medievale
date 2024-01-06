@@ -1,5 +1,6 @@
 package dev.gostav.medievale.entity;
 
+import dev.gostav.medievale.level.Level;
 import dev.gostav.medievale.location.Location;
 import dev.gostav.medievale.utils.Collider;
 import dev.gostav.medievale.utils.Direction;
@@ -12,8 +13,8 @@ public abstract class Entity {
     protected int width, height;
     protected Collider collider;
 
-    protected Entity(double x, double y, int width, int height) {
-        this.location = new Location((int) x, (int) y, null, Direction.WEST);
+    protected Entity(double x, double y, int width, int height, Level level) {
+        this.location = new Location((int) x, (int) y, level, Direction.WEST);
 
         this.width = width;
         this.height = height;

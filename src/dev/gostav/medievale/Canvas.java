@@ -32,6 +32,8 @@ public class Canvas extends JPanel {
 
     public static void loop(Runnable init, Runnable update, Runnable render) {
         init.run();
+        update.run();
+        render.run();
     }
 
     private void registerInputListeners() {

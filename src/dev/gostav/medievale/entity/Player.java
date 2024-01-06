@@ -28,7 +28,7 @@ public class Player extends Entity {
 
 
     public Player(Level level, int width, int height) {
-        super(0, 0, width, height);
+        super(0, 0, width, height, level);
 
         location.setX(Level.ToPixel(level.getWidth() / 2));
         location.setY(Level.ToPixel((level.getHeight() / 2) + 1));
